@@ -14,7 +14,7 @@ const Layout = ({children}) => {
                 <div className="bg-gray-100 min-h-screen">
                     <div className="container mx-auto">
                         <Header/>
-                        <main className="">
+                        <main >
                                 {children}
                         </main>
 
