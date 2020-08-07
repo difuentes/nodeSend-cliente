@@ -1,9 +1,16 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import Layout from '../components/Layout';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
+import  authContext from '../context/auth/authContext';
+import Alerta from '../components/alerta';
 
 const CrearCuenta = () => {
+
+
+    //acceder al state
+    const AuthContext = useContext(authContext);
+    const { mensaje,registrarUsuario} = AuthContext
 
     //formulario y validacion con fromik y yup
     const formik = useFormik({
@@ -18,7 +25,7 @@ const CrearCuenta = () => {
                 password: yup.string().required('contraseña debe ser obligatorio').min(8,'El password debe tener minimo 8 caracteres')
             }),
             onSubmit :(valores)=>{
-                console.log(valores)
+                registrarUsuario(valores)
             }
     })
 
@@ -27,6 +34,9 @@ const CrearCuenta = () => {
         <Layout>
             <div className="md:W-4/5 xl:w-3/5 mx-auto mb-32">
                 <h2 className="text-4xl font-sans font-bold text-gray-800 text-center my-4 " ><span className="text-red-500">C</span>rear <span className="text-red-500">C</span>uenta</h2>
+                
+                    { mensaje && <Alerta/> }
+
                 <div className="flex justify-center mt-5">  
                     <div className="w-full max-w-lg">
                         <form
