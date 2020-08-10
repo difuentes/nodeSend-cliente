@@ -1,10 +1,26 @@
-import React from 'react';
+import React,{useContext,useEffect} from 'react';
 import Loyout from '../components/Layout';
 import {useFormik} from 'formik';
 import * as yup from 'yup';
+import authContext from '../context/auth/authContext';
+import Alerta  from '../components/alerta';
+import  {useRouter} from 'next/router';
+
 
 const Login = () => {
 
+    //definir el context 
+    const AuthContext = useContext(authContext);
+    const {mensaje,iniciarSession,autenticado} = AuthContext;
+
+    //next router 
+    const router = useRouter();
+
+    useEffect(()=>{
+        if(autenticado){
+            router.push('/');
+        }
+    },[autenticado])
  //formulario y validacion con fromik y yup
  const formik = useFormik({
     initialValues:{
@@ -17,7 +33,7 @@ const Login = () => {
         password: yup.string().required('contraseña debe ser obligatorio').min(8,'El password debe tener minimo 8 caracteres')
     }),
     onSubmit :(valores)=>{
-        console.log(valores)
+        iniciarSession(valores)
     }
 })
 
@@ -26,6 +42,7 @@ const Login = () => {
       <Loyout>
            <div className="md:W-4/5 xl:w-3/5 mx-auto mb-32">
                 <h2 className="text-4xl font-sans font-bold text-gray-800 text-center my-4 " ><span className="text-red-500">I</span>niciar <span className="text-red-500">S</span>esion</h2>
+                {mensaje && <Alerta/>}
                 <div className="flex justify-center mt-5">  
                     <div className="w-full max-w-lg">
                         <form
@@ -73,7 +90,7 @@ const Login = () => {
 
                                
 
-                                <input type="submit" value="Crear Cuenta" className="w-full bg-red-500 py-2 uppercase text-white  font-bold rounded leading-tight focus:outline-none focus:shadow-outline"/>
+                                <input type="submit" value="Inicia Sesion" className="w-full bg-blue-400 py-2 uppercase text-white  font-bold rounded leading-tight focus:outline-none focus:shadow-outline"/>
                         </form>
 
                     </div>
