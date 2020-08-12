@@ -9,11 +9,17 @@ import{
     SUBIR_ARCHIVO_ERROR,
     SUBIR_ARCHIVO,
     CREAR_ENLACE_EXITO,
-    CREAR_ENLACE_ERROR
+    CREAR_ENLACE_ERROR,
+    LIMPIAR_STATE
 
 } from '../../types'
 
+const limpiarState = () =>{
 
+     dispatch({
+         type:LIMPIAR_STATE
+     })   
+}
 
 
 const AppState = ({children}) =>{
@@ -111,7 +117,8 @@ const AppState = ({children}) =>{
             cargando:state.cargando,
             mostrarAlerta,
             crearEnlace,
-            subirArchivo
+            subirArchivo,
+            limpiarState
         }}
 
         >
