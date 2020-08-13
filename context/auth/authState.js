@@ -13,7 +13,7 @@ import {
 } from '../../types'
 
 import tokenAuth from '../../config/tokenAuth';
-import { async } from 'q';
+
 
  
 const AuthState = ({children}) => {
@@ -21,7 +21,7 @@ const AuthState = ({children}) => {
     //definir state inicial
     const initialState ={
         token:typeof window !=='undefined' ? localStorage.getItem('token'):'',
-        autenticado:null,
+        autenticado:false,
         usuario:null,
         mensaje:null
     }
@@ -62,7 +62,6 @@ const AuthState = ({children}) => {
          console.log(datos)
          try {
              const respuesta = await clienteAxios.post('/api/auth',datos);
-
              dispach({
                  type:LOGIN_EXITOSO,
                  payload:respuesta.data.token
@@ -85,10 +84,13 @@ const AuthState = ({children}) => {
         }
         try {
            const respuesta = await clienteAxios.get('/api/auth') ;
-           dispach({
-               type: USUARIO_AUTENTICADO,
-               payload: respuesta.data.usuario
-           })
+
+           if(respuesta.data.usuario){
+            dispach({
+                type: USUARIO_AUTENTICADO,
+                payload: respuesta.data.usuario
+            })
+           }
 
         } catch (error) {
             dispach({
@@ -115,7 +117,8 @@ const AuthState = ({children}) => {
                     registrarUsuario,
                     usuarioAutenticado,
                     iniciarSession,
-                    cerraSesion
+                    cerraSesion,
+                  
                    
                 }}
             >

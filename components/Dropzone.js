@@ -1,12 +1,16 @@
 import React,{useCallback,useState,useContext} from 'react'
 import { useDropzone } from "react-dropzone";
-import appContext from '../context/app/appContext'
+import appContext from '../context/app/appContext';
+import authContext from '../context/auth/authContext';
+import Formulario from '../components/Formulario';
 
 const Dropzone = () => {
-
+    //Context APP
     const AppContext = useContext(appContext);
     const {mostrarAlerta,subirArchivo ,cargando,crearEnlace} = AppContext;
-
+    //Context Auth
+    const  AuthContext = useContext(authContext);
+    const {usuario,autenticado} = AuthContext;
     //carga archivos erronea
     const onDropRejected =()=>{
         mostrarAlerta('no se puede subir archivo el limite es 1 MB,obten una cuenta gratis para subir archivos mas grandes');
@@ -25,10 +29,13 @@ const Dropzone = () => {
     const {getRootProps,getInputProps,isDragActive,acceptedFiles} = useDropzone({onDropAccepted,onDropRejected,maxSize:1000000});
     //recuadro Archivo
     const archivos = acceptedFiles.map(archivo =>(
-        <li className="bg-white flex-1 p-3 missing-if-branch shadow-lg rounded">
-           <p className="font-bold text-xl"> {archivo.path} </p> 
-           <p className="text-sm text-gray-500 ">{(archivo.size / Math.pow(1024,2)).toFixed(2)} MB </p>   
-        </li>
+        <div>
+            <li className="bg-white flex-1 p-3 missing-if-branch shadow-lg rounded">
+            <p className="font-bold text-xl"> {archivo.path} </p> 
+            <p className="text-sm text-gray-500 ">{(archivo.size / Math.pow(1024,2)).toFixed(2)} MB </p>   
+            </li>
+        </div>
+       
     ));
     
     return (
@@ -39,6 +46,8 @@ const Dropzone = () => {
                     <ul key={archivos.url}>
                         {archivos}
                     </ul>
+
+                    { autenticado ? <Formulario/> : "no autenticcado" }
 
                     {cargando ? (<div className="spinner">
                                     <div className="cube1"></div>

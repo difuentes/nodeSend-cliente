@@ -1,6 +1,3 @@
-import React ,{useReducer} from 'react';
-import appContext from './appContext';
-
 import{
     MOSTRAR_ALERTA,
     LIMPIAR_ALERTA,
@@ -9,11 +6,11 @@ import{
     SUBIR_ARCHIVO_ERROR,
     CREAR_ENLACE_EXITO,
     CREAR_ENLACE_ERROR,
-    LIMPIAR_STATE
+    LIMPIAR_STATE,
+    AGREGAR_PASS,
+    AGREGAR_DESCARGAS
 
-} from '../../types'
-
-
+} from '../../types';
 
 export default(state,action) =>{
 
@@ -65,6 +62,16 @@ export default(state,action) =>{
                 password:'',
                 autor:null,
                 url:''
+            }
+        case AGREGAR_PASS:
+            return{
+                ...state,
+                password:action.payload
+            }
+        case  AGREGAR_DESCARGAS:
+            return{
+                ...state,
+                descargar:action.payload
             }
 
         default:

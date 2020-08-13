@@ -10,17 +10,11 @@ import{
     SUBIR_ARCHIVO,
     CREAR_ENLACE_EXITO,
     CREAR_ENLACE_ERROR,
-    LIMPIAR_STATE
+    LIMPIAR_STATE,
+    AGREGAR_PASS,
+    AGREGAR_DESCARGAS
 
 } from '../../types'
-
-const limpiarState = () =>{
-
-     dispatch({
-         type:LIMPIAR_STATE
-     })   
-}
-
 
 const AppState = ({children}) =>{
 
@@ -35,10 +29,15 @@ const AppState = ({children}) =>{
         autor:null,
         url:''
     }
+    //Limpiar State
+    const limpiarState = () =>{
 
+        dispatch({
+            type:LIMPIAR_STATE
+        })   
+    }
     //crear dispath y state
     const [state,dispatch] = useReducer(appReducer,initialState);
-
     //mostrar alerta 
     const mostrarAlerta = msg =>{
         dispatch({
@@ -51,7 +50,6 @@ const AppState = ({children}) =>{
             })
         }, 3000);
     }
-
     //subir archivo al servidor 
     const subirArchivo =  async (formData,nombreArchivo)=> {
 
@@ -80,7 +78,6 @@ const AppState = ({children}) =>{
            })
        }     
     } 
-
     //Crear Enlace una vez que se subio el archivo
     const crearEnlace = async () =>{
         const data = {
@@ -104,6 +101,21 @@ const AppState = ({children}) =>{
         }
     }
 
+    //agregar password
+    const agregarPassword = password =>{
+        dispatch({
+            type:AGREGAR_PASS,
+            payload: password
+        })
+    }
+
+    const AgregarDescargas = descargar =>{
+        dispatch({
+            type:AGREGAR_DESCARGAS,
+            payload: descargar
+        })
+    }
+
     return(
         <appContext.Provider
         value={{
@@ -118,7 +130,9 @@ const AppState = ({children}) =>{
             mostrarAlerta,
             crearEnlace,
             subirArchivo,
-            limpiarState
+            limpiarState,
+            agregarPassword,
+            AgregarDescargas
         }}
 
         >

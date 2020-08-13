@@ -40,12 +40,11 @@ export default (state , action ) =>{
                      token:action.payload,
                      autenticado : true
                 }
-
-        case USUARIO_AUTENTICADO: 
-                
+        case USUARIO_AUTENTICADO:  
                 return{
                      ...state,
-                     usuario:action.payload
+                     usuario:action.payload,
+                     autenticado: true
                 }  
         case CERRAR_SESION: 
                 localStorage.removeItem('token');
@@ -53,10 +52,8 @@ export default (state , action ) =>{
                      ...state,
                      usuario:null,
                      token:null,
-                     autenticado:null,
-
+                     autenticado:false,
                 }              
-
         default:
             return state;
     }
