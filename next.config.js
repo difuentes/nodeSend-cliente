@@ -1,6 +1,6 @@
 module.exports =  {
     env: {
-        backendURL : 'http://localhost:4060',
-        frontendURL : 'http://localhost:3000'
+        backendURL : 'https://ancient-refuge-59449.herokuapp.com/',
+        frontendURL : 'https://node-send-cliente-delta.vercel.app/'
     }
 }
